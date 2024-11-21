@@ -1,0 +1,23 @@
+[
+    {
+        "lat": 40.7128,
+        "lng": -74.0060,
+        "image": "https://media.gettyimages.com/id/2167303154/photo/topshot-bangladesh-weather-climate-flood.jpg?s=612x612&w=gi&k=20&c=radvj9DN33U56ox7HRnPskfPL8-9C0ff4rRFHL_ce2Y=",
+        "timestamp": 1672531199000,
+        "rescueStatus": "Active"
+    },
+    {
+        "lat": 34.0522,
+        "lng": -118.2437,
+        "image": "https://media.gettyimages.com/id/1589390913/photo/heavy-rains-lead-to-flooding-in-south-chittagong.jpg?s=612x612&w=gi&k=20&c=-VJ_-1mgZFY9X-t8VPc-jx_V1ZqKN1j-AKfDACNGmkA=",
+        "timestamp": 1672534799000,
+        "rescueStatus": "Not Active"
+    },
+    {
+        "lat": 51.5074,
+        "lng": -0.1278,
+        "image": "https://media.gettyimages.com/id/2167579841/photo/flood-crisis-bangladesh.jpg?s=612x612&w=gi&k=20&c=CQ-cB-dD2O_MD0OeKbMBrBU3riQuXftb7Fw_b9HEuoM=",
+        "timestamp": 1672538399000,
+        "rescueStatus": "Active"
+    }
+]

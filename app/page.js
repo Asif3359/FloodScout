@@ -1,155 +1,56 @@
 "use client";
-import { useState, useEffect } from 'react';
-import { FaAngleDoubleDown, FaAngleDoubleUp, FaAngleDoubleLeft, FaAngleDoubleRight, FaAngleDown, FaAngleUp } from "react-icons/fa";
-import { MdDelete, MdSave } from "react-icons/md";
-import { FaMapLocationDot } from "react-icons/fa6"
-import Link from 'next/link';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-export default function Home() {
-  const [gpsData, setGpsData] = useState({ lat: 0, lng: 0 });
-  const [videoUrl, setVideoUrl] = useState("http://your-esp32-cam-ip/stream");
-  const [controlStatus, setControlStatus] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
+export default function Login() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const router = useRouter();
 
-  // Fetch GPS location data
-  useEffect(() => {
-    const fetchGpsData = async () => {
-      const res = await fetch("/api/gps"); // Backend API for GPS
-      const data = await res.json();
-      setGpsData(data);
-    };
+  const handleLogin = () => {
+    const validUsername = "admin"; // Static username
+    const validPassword = "password123"; // Static password
 
-    fetchGpsData();
-    const interval = setInterval(fetchGpsData, 2000); // Update every 2 seconds
-    return () => clearInterval(interval);
-  }, []);
-
-  // Send control commands
-  const sendControl = async (direction) => {
-    setControlStatus(`Moving ${direction}`);
-    await fetch("/api/control", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ direction }),
-    });
-    setTimeout(() => setControlStatus(""), 1000);
-  };
-
-  // Save current location and take picture
-  const saveLocation = async () => {
-    await fetch("/api/save-location", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ gpsData }),
-    });
-    alert("Location saved successfully!");
+    if (username === validUsername && password === validPassword) {
+      router.push("/home"); // Redirect to the main page
+    } else {
+      setError("Invalid username or password");
+    }
   };
 
   return (
-    <section className="p-6 container mx-auto min-h-screen">
-      <h1 className="text-4xl font-bold text-center mb-8">FloodScout</h1>
-
-      {/* Page and modal button */}
-      <div className="flex justify-between mx-auto px-2 mt-5">
-
-        <Link href="/history" className="btn lg:btn-wide btn-max btn-primary text-white">
-        <FaMapLocationDot />History
-        </Link>
+    <section className="min-h-screen px-4 flex items-center justify-center bg-gray-100">
+      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <h1 className="text-2xl font-bold mb-6 text-center">Login</h1>
+        {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+        <div className="mb-4">
+          <label className="block text-gray-700 mb-2">Username</label>
+          <input
+            type="text"
+            className="w-full px-3 py-2 border rounded-md"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Enter your username"
+          />
+        </div>
+        <div className="mb-6">
+          <label className="block text-gray-700 mb-2">Password</label>
+          <input
+            type="password"
+            className="w-full px-3 py-2 border rounded-md"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Enter your password"
+          />
+        </div>
         <button
-          className="btn lg:btn-wide btn-max btn-primary text-white"
-          onClick={() => setIsModalOpen(true)} // Open modal
+          className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
+          onClick={handleLogin}
         >
-          <FaMapLocationDot /> Live
+          Login
         </button>
       </div>
-
-      {/* Video stream */}
-      <div className="mt-5">
-        <div className="bg-white rounded-lg p-4">
-          <h2 className="text-2xl font-bold mb-4">Live Video Stream</h2>
-          <video
-            src={videoUrl}
-            className="rounded-lg w-full lg:max-h-[600px]"
-            controls
-            autoPlay
-            muted
-          >
-            Your browser does not support the video tag.
-          </video>
-        </div>
-      </div>
-
-      <div className="w-full px-2 mt-5">
-        <button
-          className="btn w-full btn-primary text-white"
-          onClick={saveLocation}
-        >
-          <MdSave /> Human Found
-        </button>
-      </div>
-
-      {/* Boat Controls */}
-      <div className="bg-white rounded-lg p-6 mt-8 text-center text-white ">
-        <h2 className="text-2xl font-bold mb-4">Boat Controls</h2>
-        <div className="grid grid-cols-3 gap-4 mx-auto text-center">
-          <div>
-            <button className=" text-white btn lg:btn-wide btn-max btn-primary" onClick={() => sendControl("up")}>
-              <FaAngleDoubleUp />
-            </button>
-          </div>
-          <div>
-            <button className=" text-white btn lg:btn-wide btn-max btn-primary" onClick={() => sendControl("left")}>
-              <FaAngleDoubleLeft />
-            </button>
-          </div>
-          <div>
-            <button className=" text-white btn lg:btn-wide btn-max btn-primary" onClick={() => sendControl("right")}>
-              <FaAngleDoubleRight />
-            </button>
-          </div>
-          <div>
-            <button className=" text-white btn lg:btn-wide btn-max btn-primary" onClick={() => sendControl("down")}>
-              <FaAngleDoubleDown />
-            </button>
-          </div>
-          <div>
-            <button className=" text-white btn lg:btn-wide btn-max btn-primary" onClick={() => sendControl("slow")}>
-              <FaAngleDown />
-            </button>
-          </div>
-          <div>
-            <button className=" text-white btn lg:btn-wide btn-max btn-primary" onClick={() => sendControl("fast")}>
-              <FaAngleUp />
-            </button>
-          </div>
-        </div>
-        <p className="mt-4 text-green-500">{controlStatus}</p>
-      </div>
-
-      {/* Modal for Live Location */}
-      {isModalOpen && (
-        <div className="fixed px-5 lg:px-10 inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white p-6 rounded-lg  w-full max-w-md">
-            <h2 className="text-2xl font-bold mb-4">Live Location</h2>
-            <p>Latitude: {gpsData.lat}</p>
-            <p>Longitude: {gpsData.lng}</p>
-            <iframe
-              src={`https://maps.google.com/maps?q=${gpsData.lat},${gpsData.lng}&z=15&output=embed`}
-              width="100%"
-              height="200"
-              style={{ border: 0 }}
-              allowFullScreen=""
-              loading="lazy"
-            ></iframe>
-            <button
-              className="btn btn-primary mt-4"
-              onClick={() => setIsModalOpen(false)} // Close modal
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
     </section>
   );
 }
