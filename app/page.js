@@ -50,13 +50,13 @@ export default function Home() {
       <h1 className="text-4xl font-bold text-center mb-8">FloodScout</h1>
 
       {/* Page and modal button */}
-      <div className="flex justify-between mx-auto md:px-12 mt-5">
+      <div className="flex justify-between mx-auto px-2 mt-5">
 
-        <Link href="/history" className="btn lg:btn-wide btn-max btn-primary">
+        <Link href="/history" className="btn lg:btn-wide btn-max btn-primary text-white">
         <FaMapLocationDot />History
         </Link>
         <button
-          className="btn lg:btn-wide btn-max btn-primary"
+          className="btn lg:btn-wide btn-max btn-primary text-white"
           onClick={() => setIsModalOpen(true)} // Open modal
         >
           <FaMapLocationDot /> Live
@@ -79,49 +79,46 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="flex justify-between mx-auto md:px-12 mt-5">
-        <button className="btn lg:btn-wide btn-max btn-primary">
-          <MdDelete /> Location
-        </button>
+      <div className="w-full px-2 mt-5">
         <button
-          className="btn lg:btn-wide btn-max btn-primary"
+          className="btn w-full btn-primary text-white"
           onClick={saveLocation}
         >
-          <MdSave /> Location
+          <MdSave /> Human Found
         </button>
       </div>
 
       {/* Boat Controls */}
-      <div className="bg-white rounded-lg p-6 mt-8 text-center">
+      <div className="bg-white rounded-lg p-6 mt-8 text-center text-white ">
         <h2 className="text-2xl font-bold mb-4">Boat Controls</h2>
         <div className="grid grid-cols-3 gap-4 mx-auto text-center">
           <div>
-            <button className="btn lg:btn-wide btn-max btn-primary" onClick={() => sendControl("up")}>
+            <button className=" text-white btn lg:btn-wide btn-max btn-primary" onClick={() => sendControl("up")}>
               <FaAngleDoubleUp />
             </button>
           </div>
           <div>
-            <button className="btn lg:btn-wide btn-max btn-primary" onClick={() => sendControl("left")}>
+            <button className=" text-white btn lg:btn-wide btn-max btn-primary" onClick={() => sendControl("left")}>
               <FaAngleDoubleLeft />
             </button>
           </div>
           <div>
-            <button className="btn lg:btn-wide btn-max btn-primary" onClick={() => sendControl("right")}>
+            <button className=" text-white btn lg:btn-wide btn-max btn-primary" onClick={() => sendControl("right")}>
               <FaAngleDoubleRight />
             </button>
           </div>
           <div>
-            <button className="btn lg:btn-wide btn-max btn-primary" onClick={() => sendControl("down")}>
+            <button className=" text-white btn lg:btn-wide btn-max btn-primary" onClick={() => sendControl("down")}>
               <FaAngleDoubleDown />
             </button>
           </div>
           <div>
-            <button className="btn lg:btn-wide btn-max btn-primary" onClick={() => sendControl("slow")}>
+            <button className=" text-white btn lg:btn-wide btn-max btn-primary" onClick={() => sendControl("slow")}>
               <FaAngleDown />
             </button>
           </div>
           <div>
-            <button className="btn lg:btn-wide btn-max btn-primary" onClick={() => sendControl("fast")}>
+            <button className=" text-white btn lg:btn-wide btn-max btn-primary" onClick={() => sendControl("fast")}>
               <FaAngleUp />
             </button>
           </div>
